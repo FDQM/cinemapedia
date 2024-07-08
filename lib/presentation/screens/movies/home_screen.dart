@@ -29,19 +29,28 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     super.initState();
     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
     ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
+    ref.read(upcomingMoviesProvider.notifier).loadNextPage();
 
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final initialLoading = ref.watch(initialLoadingProvider);
+
+    if(initialLoading) return const FullScreenLoader();
+
     final nowPlayingMoviews = ref.watch(nowPlayingMoviesProvider);
     final moviesSlideshow = ref.watch(moviesSlideshowProvider);
     final popularMoviews = ref.watch(popularMoviesProvider);
+    final upcomingMoviews = ref.watch(upcomingMoviesProvider);
+    final topRatedMoviews = ref.watch(topRatedMoviesProvider);
 
     return CustomScrollView(slivers: [
       const SliverAppBar(
         floating: true,
-        flexibleSpace: FlexibleSpaceBar(title: CustomAppbar(),expandedTitleScale: double.infinity,),
+        flexibleSpace: FlexibleSpaceBar(title: CustomAppbar()),
       ),
       SliverList(delegate: SliverChildBuilderDelegate(
         (context, index) {
@@ -58,11 +67,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
               ),
               MoviesHorizontalListview(
-                movies: nowPlayingMoviews,
+                movies: upcomingMoviews,
                 title: 'Proximamente',
                 subTitle: 'Este mes',
                 loadNextPage: () =>
-                    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                    ref.read(upcomingMoviesProvider.notifier).loadNextPage(),
               ),
               MoviesHorizontalListview(
                 movies: popularMoviews,
@@ -72,18 +81,18 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     ref.read(popularMoviesProvider.notifier).loadNextPage(),
               ),
               MoviesHorizontalListview(
-                movies: nowPlayingMoviews,
+                movies: topRatedMoviews,
                 title: 'Mejor Calificadas',
                 subTitle: 'Desde siempre',
                 loadNextPage: () =>
-                    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                    ref.read(topRatedMoviesProvider.notifier).loadNextPage(),
               ),
               const SizedBox(
                 height: 20,
               )
             ],
           );
-        },
+        },childCount: 1
       )),
     ]);
   }
