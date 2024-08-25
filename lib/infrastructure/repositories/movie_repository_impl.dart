@@ -32,5 +32,10 @@ final MoviesDatasource datasource;
     return datasource.getMovieById(id);
   }
   
+  @override
+  Future<List<Movie>> searchMovie(String query) {
+    return datasource.searchMovie(query);
+  }
+  
 
 }
