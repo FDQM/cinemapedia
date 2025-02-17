@@ -33,7 +33,6 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
       initialMovies = movies;
       debouncedMovies.add(movies);
       isLoadingStream.add(false);
-
     });
   }
 
@@ -73,7 +72,6 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
           initialData: false,
           stream: isLoadingStream.stream,
           builder: (context, snapshot) {
-            print(snapshot.data);
             if (snapshot.data ?? false) {
               return SpinPerfect(
                   duration: const Duration(seconds: 20),
