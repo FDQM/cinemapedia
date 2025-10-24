@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/domain/repositories/local_storage_repository.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
@@ -19,10 +17,10 @@ class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
 
   Future<List<Movie>> loadNextPage() async {
     final movies =
-        await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
+        await localStorageRepository.loadFavoritesMovies(offset: page * 10, limit: 10);
     page++;
 
-    final tempMoviesMap = <int, Movie>{};
+    final tempMoviesMap = <int, Movie>{}; 
     for (final movie in movies) {
       tempMoviesMap[movie.id] = movie;
     }
@@ -33,7 +31,8 @@ class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
 
   Future<void> toggleFavorite(Movie movie) async {
     await localStorageRepository.toggleFavorite(movie);
-    final bool isMovieInFavorite = state[movie.id] != null;
+    // final bool isMovieInFavorite = state[movie.id] != null;
+    final isMovieInFavorite = await localStorageRepository.isMovieFavorite(movie.id);
 
     if (isMovieInFavorite) {
       state.remove(movie.id);

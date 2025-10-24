@@ -5,9 +5,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // await db.into(db.favoriteMovies).insert(FavoriteMoviesCompanion.insert(movieId: 1, backdropPath: 'backdropPath.png', originalTitle: 'My first movie', posterPath: 'posterPath.png', title: 'Mi primera pelicula'));
+// final deleteQuery =  db.delete(db.favoriteMovies);
+//   await deleteQuery.go();
+//   final moviesQuery = await db.select(db.favoriteMovies).get();
+//   print('movies: $moviesQuery');
+
   await dotenv.load(fileName: ".env");
-  runApp(
-    const ProviderScope(child: MainApp()));
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -15,7 +22,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp.router(
+    return MaterialApp.router(
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
       theme: AppTheme().getTheme(),

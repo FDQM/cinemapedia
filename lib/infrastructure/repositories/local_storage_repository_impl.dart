@@ -14,8 +14,8 @@ final LocalStorageDataSource dataSource;
   }
 
   @override
-  Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) {
-    return dataSource.loadMovies(limit: limit, offset: offset);
+  Future<List<Movie>> loadFavoritesMovies({int limit = 10, offset = 0}) {
+    return dataSource.loadFavoritesMovies(limit: limit, offset: offset);
   }
 
   @override

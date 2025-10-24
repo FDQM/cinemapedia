@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
+import 'package:cinemapedia/presentation/providers/storage/is_favorite_movie_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -183,12 +184,6 @@ class _ActorsByMovie extends ConsumerWidget {
   }
 }
 
-final isFavoriteProvider =
-    FutureProvider.family.autoDispose((ref, int movieId) {
-  final localStorageRepository = ref.watch(localStorageRepositoryProvider);
-
-  return localStorageRepository.isMovieFavorite(movieId);
-});
 
 class _CustomSliverAppbar extends ConsumerWidget {
   final Movie movie;
